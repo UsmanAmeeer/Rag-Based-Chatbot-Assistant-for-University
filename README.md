@@ -1,10 +1,10 @@
 # Rag-Based-Chatbot-Assistant-for-University
  Students struggle to find admission details (deadlines, eligibility) quickly.  So i made a solution,  A chatbot that answers questions 24/7 using official university documents
+# PDF + Web RAG Chatbot with Flask, LangChain, FAISS, and React Frontend
 
-# PDF + Web RAG Chatbot with Flask, LangChain, and FAISS
-
-This project is a **Retrieval-Augmented Generation (RAG) chatbot** built with Flask, LangChain, OpenAI's GPT models, and FAISS.  
-It can answer questions based on **PDF documents** and **web pages** with **chat history** and **conversation memory**.
+This project is a **Retrieval-Augmented Generation (RAG) chatbot** powered by **Flask**, **LangChain**, **OpenAI GPT models**, and **FAISS**.  
+It processes data from **PDF documents** and **web pages** to answer user queries with **context awareness** and **chat history**.  
+A **React-based frontend** is provided for an interactive user experience.
 
 ---
 
@@ -16,6 +16,7 @@ It can answer questions based on **PDF documents** and **web pages** with **chat
 - 🧠 Maintain **chat history** with `ConversationBufferMemory`.
 - 💬 Serve a **REST API** using Flask (`/chat` endpoint).
 - ⚡ Uses **OpenAI GPT-4o-mini** for responses.
+- 🖥 Interactive **React frontend** with real-time chat.
 - 🔁 Automatically rebuilds FAISS index if not found locally.
 
 ---
@@ -24,21 +25,26 @@ It can answer questions based on **PDF documents** and **web pages** with **chat
 
 ```
 project/
-│-- app.py                # Main Flask app with LangChain integration
-│-- .env                   # Store your OpenAI API key
-│-- faiss_index/           # FAISS vector store directory (auto-created)
-│-- data/
-│   └── data.pdf           # PDF file to be processed
+│-- backend/
+│   │-- app.py               # Main Flask app with LangChain integration
+│   │-- .env                  # Store your OpenAI API key
+│   │-- faiss_index/          # FAISS vector store directory (auto-created)
+│   │-- data/
+│   │   └── data.pdf          # PDF file to be processed
+│
+│-- frontend/
+│   │-- package.json          # React dependencies
+│   │-- src/                  # React components and pages
+│   │-- public/               # Static files
 ```
 
 ---
 
-## 📦 Installation
+## 📦 Backend Installation (Flask API)
 
-1. **Clone the repository**
+1. **Navigate to backend folder**
 ```bash
-git clone https://github.com/yourusername/Rag-Based-Chatbot-Assistant-for-University.git
-cd rag-chatbot
+cd backend
 ```
 
 2. **Create and activate virtual environment**
@@ -58,32 +64,41 @@ pip install -r requirements.txt
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
----
-
-## ⚙️ Configuration
-
-Update these variables inside `app.py`:
-
-```python
-pdf_path = r"D:\path\to\data.pdf"  # Path to your PDF
-hardcoded_urls = [
-    "https://www.example.com/",
-    "https://www.example.com/page"
-]
-faiss_index_dir = "faiss_index"    # Folder for FAISS storage
-```
-
----
-
-## ▶️ Running the App
-
+5. **Run Flask API**
 ```bash
 python app.py
 ```
-
-Server will run at:
+Backend will be available at:
 ```
-http://0.0.0.0:5000
+http://localhost:5000
+```
+
+---
+
+## 💻 Frontend Installation (React UI)
+
+1. **Navigate to frontend folder**
+```bash
+cd frontend
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Start development server**
+```bash
+npm run dev
+```
+Frontend will be available at:
+```
+http://localhost:3000
+```
+
+4. **Build for production**
+```bash
+npm run build
 ```
 
 ---
@@ -113,7 +128,7 @@ http://0.0.0.0:5000
 
 ---
 
-## 🛠 Dependencies
+## 🛠 Backend Dependencies
 
 Add this to your `requirements.txt`:
 
@@ -125,41 +140,37 @@ faiss-cpu
 openai
 ```
 
-Install them via:
-```bash
-pip install -r requirements.txt
-```
-
 ---
 
 ## 🧠 How It Works
 
-1. **Load Data**  
-   - PDF loaded via `PyPDFLoader`
-   - Web pages loaded via `WebBaseLoader`
+1. **Data Loading**  
+   - PDFs via `PyPDFLoader`
+   - Web pages via `WebBaseLoader`
 
-2. **Split Text**  
-   - Uses `RecursiveCharacterTextSplitter` with `chunk_size=1000` and `chunk_overlap=200`
+2. **Text Splitting**  
+   - `RecursiveCharacterTextSplitter` (`chunk_size=1000`, `chunk_overlap=200`)
 
-3. **Create Embeddings**  
-   - Generates OpenAI embeddings with `OpenAIEmbeddings`
+3. **Embeddings & Storage**  
+   - `OpenAIEmbeddings` for vectorization
+   - FAISS for fast retrieval
 
-4. **Vector Store**  
-   - Stores chunks in FAISS for fast semantic search
-   - Saves to `faiss_index` folder
+4. **Query Handling**  
+   - Retrieve relevant chunks
+   - Generate answers using `ChatOpenAI`
+   - Maintain chat history with `ConversationBufferMemory`
 
-5. **Query Handling**  
-   - On `/chat` request, retrieves relevant chunks
-   - Feeds them into `ChatOpenAI` (GPT-4o-mini)
-   - Maintains session-based memory
+5. **Frontend Communication**  
+   - React frontend sends queries to Flask API
+   - Displays responses and sources in real-time
 
 ---
 
 ## 📌 Notes
 
-- First run will take longer to process PDF and URLs and save FAISS index.
-- For production, you can deploy on **Docker**, **Railway**, **Render**, or **AWS**.
-- Replace sample URLs and PDF with your own data.
+- First run will build FAISS index; subsequent runs will load it.
+- Replace example URLs and PDF with your own data.
+- For production, consider deploying Flask API and React frontend separately.
 
 ---
 
