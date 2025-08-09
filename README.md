@@ -1,5 +1,3 @@
-# Rag-Based-Chatbot-Assistant-for-University
- Students struggle to find admission details (deadlines, eligibility) quickly.  So i made a solution,  A chatbot that answers questions 24/7 using official university documents
 # PDF + Web RAG Chatbot with Flask, LangChain, FAISS, and React Frontend
 
 This project is a **Retrieval-Augmented Generation (RAG) chatbot** powered by **Flask**, **LangChain**, **OpenAI GPT models**, and **FAISS**.  
