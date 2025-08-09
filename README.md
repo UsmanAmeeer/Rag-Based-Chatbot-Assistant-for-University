@@ -1,178 +1,146 @@
-# PDF + Web RAG Chatbot with Flask, LangChain, FAISS, and React Frontend
+# AI Chatbot with Flask Backend & React Frontend
 
-This project is a **Retrieval-Augmented Generation (RAG) chatbot** powered by **Flask**, **LangChain**, **OpenAI GPT models**, and **FAISS**.  
-It processes data from **PDF documents** and **web pages** to answer user queries with **context awareness** and **chat history**.  
-A **React-based frontend** is provided for an interactive user experience.
+This project is a **full-stack AI chatbot** powered by:
+- **Flask** + **LangChain** + **FAISS** for backend document retrieval and conversational memory
+- **React** + **Vite** + **Tailwind CSS** for the frontend UI
 
----
-
-## 🚀 Features
-
-- 📄 Load and process **PDF files**.
-- 🌐 Scrape and process **web pages**.
-- 🔍 Store embeddings in **FAISS vector database** for fast retrieval.
-- 🧠 Maintain **chat history** with `ConversationBufferMemory`.
-- 💬 Serve a **REST API** using Flask (`/chat` endpoint).
-- ⚡ Uses **OpenAI GPT-4o-mini** for responses.
-- 🖥 Interactive **React frontend** with real-time chat.
-- 🔁 Automatically rebuilds FAISS index if not found locally.
+It allows users to query PDF and website data using OpenAI's GPT models, with conversation history maintained per session.
 
 ---
 
-## 📂 Project Structure
+## 🚀 Tech Stack
+**Backend:**
+- Python 3.10+
+- Flask
+- LangChain
+- FAISS (Vector Store)
+- OpenAI GPT-4o-mini
+- dotenv for environment variables
 
+**Frontend:**
+- React (Vite)
+- Tailwind CSS
+- Axios (API calls to backend)
+
+---
+
+## 📂 Folder Structure
 ```
-project/
-│-- backend/
-│   │-- app.py               # Main Flask app with LangChain integration
-│   │-- .env                  # Store your OpenAI API key
-│   │-- faiss_index/          # FAISS vector store directory (auto-created)
-│   │-- data/
-│   │   └── data.pdf          # PDF file to be processed
+project-root/
 │
-│-- frontend/
-│   │-- package.json          # React dependencies
-│   │-- src/                  # React components and pages Unzip this before using
-│   │-- public/               # Static files
+├── backend/               # Flask backend code
+│   ├── app.py              # Main backend entry
+│   ├── requirements.txt    # Python dependencies
+│   ├── faiss_index/        # FAISS vector store (generated)
+│   └── data/               # PDFs or source files
+│
+├── src/                    # React frontend source code
+│   ├── components/         # UI components
+│   ├── pages/              # React pages
+│   ├── App.jsx             # Main React app
+│   └── main.jsx
+│
+├── package.json            # Frontend dependencies
+├── tailwind.config.js      # Tailwind configuration
+├── vite.config.js          # Vite config
+├── .gitignore              # Ignore sensitive files
+├── README.md               # This file
+└── .env                    # Environment variables (NOT committed)
 ```
 
 ---
 
-## 📦 Backend Installation (Flask API)
-
-1. **Navigate to backend folder**
-```bash
-cd backend
+## 🔑 Environment Variables
+Create a `.env` file in the **backend** folder:
 ```
-
-2. **Create and activate virtual environment**
-```bash
-python -m venv venv
-source venv/bin/activate   # On macOS/Linux
-venv\Scripts\activate      # On Windows
-```
-
-3. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-4. **Create `.env` file**
-```env
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-5. **Run Flask API**
-```bash
-python app.py
-```
-Backend will be available at:
-```
-http://localhost:5000
-```
+---
+
+## ⚙️ Backend Setup
+1. Navigate to backend folder:
+   ```bash
+   cd backend
+   ```
+2. Create virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run the Flask server:
+   ```bash
+   python app.py
+   ```
+   Backend will start at `http://localhost:5000`
 
 ---
 
-## 💻 Frontend Installation (React UI)
+## 💻 Frontend Setup
+1. Navigate to project root (where `package.json` is located).
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start development server:
+   ```bash
+   npm run dev
+   ```
+   Frontend will run at `http://localhost:5173`
 
-1. **Navigate to frontend folder**
-```bash
-cd frontend
-```
-
-2. **Install dependencies**
-```bash
-npm install
-```
-
-3. **Start development server**
-```bash
-npm run dev
-```
-Frontend will be available at:
-```
-http://localhost:3000
-```
-
-4. **Build for production**
-```bash
-npm run build
-```
+4. Build for production:
+   ```bash
+   npm run build
+   ```
 
 ---
 
-## 📡 API Usage
-
-### **POST** `/chat`
-
-**Request Body:**
+## 🛠️ API Endpoint
+**POST** `/chat`  
+Request:
 ```json
 {
-  "session_id": "user1",
-  "query": "What is mentioned in the vice chancellor's message?"
+  "session_id": "user123",
+  "query": "What is the VC's message?"
+}
+```
+Response:
+```json
+{
+  "answer": "The VC's message is...",
+  "sources": ["https://www.iub.edu.pk/vice-chancellor-message", "data.pdf"]
 }
 ```
 
-**Response Example:**
-```json
-{
-  "answer": "The vice chancellor emphasizes academic excellence...",
-  "sources": [
-    "D:/Projects/data/data.pdf",
-    "https://www.iub.edu.pk/vice-chancellor-message"
-  ]
-}
+---
+
+## 📌 Git Ignore Recommendations
+Make sure `.gitignore` contains:
+```
+# Python
+venv/
+__pycache__/
+*.pyc
+faiss_index/
+
+# Node
+node_modules/
+dist/
+
+# Environment
+.env
 ```
 
 ---
 
-## 🛠 Backend Dependencies
-
-Add this to your `requirements.txt`:
-
-```
-flask
-python-dotenv
-langchain
-faiss-cpu
-openai
-```
+## 📷 Screenshots
+*(Optional – add screenshots of UI here)*
 
 ---
 
-## 🧠 How It Works
-
-1. **Data Loading**  
-   - PDFs via `PyPDFLoader`
-   - Web pages via `WebBaseLoader`
-
-2. **Text Splitting**  
-   - `RecursiveCharacterTextSplitter` (`chunk_size=1000`, `chunk_overlap=200`)
-
-3. **Embeddings & Storage**  
-   - `OpenAIEmbeddings` for vectorization
-   - FAISS for fast retrieval
-
-4. **Query Handling**  
-   - Retrieve relevant chunks
-   - Generate answers using `ChatOpenAI`
-   - Maintain chat history with `ConversationBufferMemory`
-
-5. **Frontend Communication**  
-   - React frontend sends queries to Flask API
-   - Displays responses and sources in real-time
-
----
-
-## 📌 Notes
-
-- First run will build FAISS index; subsequent runs will load it.
-- Replace example URLs and PDF with your own data.
-- For production, consider deploying Flask API and React frontend separately.
-
----
-
-## 📜 License
-
-This project is for educational and development purposes.  
-Feel free to modify and use in your own projects.
+## 📄 License
+MIT License. You’re free to modify and use this project.
