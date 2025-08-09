@@ -32,7 +32,7 @@ project/
 │
 │-- frontend/
 │   │-- package.json          # React dependencies
-│   │-- src/                  # React components and pages
+│   │-- src/                  # React components and pages Unzip this before using
 │   │-- public/               # Static files
 ```
 
