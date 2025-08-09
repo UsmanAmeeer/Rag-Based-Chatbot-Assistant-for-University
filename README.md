@@ -118,29 +118,7 @@ Response:
 
 ---
 
-## 📌 Git Ignore Recommendations
-Make sure `.gitignore` contains:
-```
-# Python
-venv/
-__pycache__/
-*.pyc
-faiss_index/
 
-# Node
-node_modules/
-dist/
-
-# Environment
-.env
-```
-
----
 
 ## 📷 Screenshots
-*(Optional – add screenshots of UI here)*
-
----
-
-## 📄 License
-MIT License. You’re free to modify and use this project.
+<img width="1918" height="871" alt="image" src="https://github.com/user-attachments/assets/f4e7655a-3122-452c-bffe-3e35d2bb20a4" />
